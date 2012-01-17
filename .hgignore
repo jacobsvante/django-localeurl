@@ -1,5 +1,0 @@
-^docs/.build/
-^dist/
-^django_localeurl.egg-info/
-^HGREV$
-^\.tox/
