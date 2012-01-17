@@ -46,6 +46,12 @@ class LocaleURLMiddleware(object):
             if accept_langs:
                 locale = accept_langs[0]
         locale_path = utils.locale_path(path, locale)
+
+        # Remove locale prefix for exempt user agents
+        for ua in localeurl_settings.PREFIX_EXEMPT_USER_AGENTS:
+            if ua in request.META.get('HTTP_USER_AGENT', ''):
+                l, locale_path = utils.strip_path(locale_path)        
+
         if locale_path != request.path_info:
             if request.META.get("QUERY_STRING", ""):
                 locale_path = "%s?%s" % (locale_path,
